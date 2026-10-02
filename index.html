@@ -258,12 +258,12 @@ document.getElementById('f').addEventListener('submit',function(e){e.preventDefa
 (function(){
 const red=matchMedia('(prefers-reduced-motion:reduce)').matches;
 const clk=document.getElementById('clk');const tk=()=>clk.textContent=new Date().toLocaleTimeString('en-GB');tk();setInterval(tk,1000);
-const IDS=['photo1','photo2','photo3','photo4','photo5','photo6'],st=document.getElementById('strip');
+const IDS=['photo1','photo2','photo3','photo4','photo5','photo6','photo7','photo8'],st=document.getElementById('strip');
 const mk=i=>{const d=document.createElement('div');d.className='fr';d.innerHTML='<img alt="" src="assets/photo/'+i+'.jpg">';st.appendChild(d);return d};const fr=IDS.map(mk);
 let off=0,lt=0,hv=true;
 new IntersectionObserver(e=>{hv=e[0].isIntersecting;if(hv){lt=0;requestAnimationFrame(hf)}}).observe(st);
 function hf(n){if(!hv)return;const dt=lt?Math.min((n-lt)/1000,.05):0;lt=n;if(!red)off+=dt*46;
-const W=st.clientWidth,fw=fr[0].offsetWidth,g=fw*1.18;while(g>0&&g*fr.length<W+2*g)fr.push(mk(IDS[fr.length%IDS.length]));const T=g*fr.length;
+const W=st.clientWidth,fw=fr[0].offsetWidth,g=fw*1.18;while(g>0&&(g*fr.length<W+2*g||fr.length%IDS.length))fr.push(mk(IDS[fr.length%IDS.length]));const T=g*fr.length;
 fr.forEach((f,i)=>{const x=(((i*g-off)%T)+T)%T-g,d=(x+fw/2-W/2)/(W/2);
 f.style.transform='translate3d('+x.toFixed(1)+'px,0,0) rotateY('+(-d*34).toFixed(1)+'deg) scale('+(1-Math.abs(d)*.12).toFixed(3)+')';f.style.opacity=(1-Math.min(Math.abs(d),1)*.4).toFixed(2)});
 requestAnimationFrame(hf)}hf(0);
